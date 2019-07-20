@@ -215,23 +215,23 @@ tesseract-layer:
 ### Lambda Deployment
 
 Switch to the project root directory
-# Setting up Python 3.6 AWS Lambda deployment package with numpy, scipy, pillow and scikit-image
-( https://medium.com/@samme/setting-up-python-3-6-aws-lambda-deployment-package-with-numpy-scipy-pillow-and-scikit-image-de488b2afca6 )
-# create mylambdapackag folder
+#Setting up Python 3.6 AWS Lambda deployment package with numpy, scipy, pillow and scikit-image
+(https://medium.com/@samme/setting-up-python-3-6-aws-lambda-deployment-package-with-numpy-scipy-pillow-and-scikit-image-de488b2afca6 )
+#create mylambdapackag folder
 mkdir mylambdapackage
-# start the docker container and share the folder created
+#start the docker container and share the folder created
 
-# https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html?source=post_page---------------------------
-# https://github.com/docker-library/official-images/blob/master/library/amazonlinux
+#https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html?source=post_page---------------------------
+#https://github.com/docker-library/official-images/blob/master/library/amazonlinux
 
 docker run -ti -v ~/mylambdapackage:/mylambdapackage amazonlinux:2018.03.0.20190514
 
-# Inside docker container,
+#Inside docker container,
 yum update -y && yum install -y gcc48 gcc48-c++ python36 python36-devel atlas-devel atlas-sse3-devel blas-devel lapack-devel zlib-devel libpng-devel libjpeg-turbo-devel zip freetype-devel findutils libtiff libtiff-devel
 
-# go into /mylambdapackage folder
+#go into /mylambdapackage folder
 cd /mylambdapackage
-# create Python environment in mylambda folder and activate it
+#create Python environment in mylambda folder and activate it
 python36 -m venv --copies mylambda && source mylambda/bin/activate
 
 The--copies parameter will “try to use copies rather than symlinks, even when symlinks are the default for the platform”. 
@@ -240,10 +240,10 @@ pip3 install -U pip
 pip3 install --no-binary :all: numpy scipy pillow
 pip3 install --no-binary :all: cython
 pip3 install --no-binary :all: scikit-image
-# specify where the shared libraries will be stored
+#specify where the shared libraries will be stored
 libdir="$VIRTUAL_ENV/lib/python3.6/site-packages/lib/"
 mkdir -p $libdir
-# copy the libraries
+#copy the libraries
 cp -v /usr/lib64/atlas/*.so.3 $libdir
 cp -v /usr/lib64/libquadmath.so.0 $libdir
 cp -v /usr/lib64/libgfortran.so.3 $libdir
