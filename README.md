@@ -176,28 +176,29 @@ popd<br>
 
 The lambda function is accepting json post request
 
-```json
-{
-  "image64": "base64 endcoded image"
-}
+
+#### Lambda Test function
+
+Please refer to the test event, as defined in eventdata.json.
+
+## Built With
+
+* [Tesseract Open Source OCR Engine](https://github.com/tesseract-ocr/tesseract)
+* [leptonica](http://www.leptonica.com/)
+* [Docker](https://www.docker.com/)
+* [Serverless](https://serverless.com/)
+
+## Contributing
+
+Please feel free to comment or contribute especially if your integrating with [serverless](https://serverless.com/) or [AWS SAM](https://docs.aws.amazon.com/lambda/latest/dg/deploying-lambda-apps.html)
+
+## Authors
+
+* **Gerd Wittchen** - *Initial work* - [Idea](https://gist.github.com/barbolo/e59aa45ec8e425a26ec4da1086acfbc7)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
 </code></pre>
-Lambda Test function
-<p>
-</p><h4 id="lambda-test-function">Lambda Test function</h4>
-<p>Please refer to the test event, as defined in eventdata.json.</p>
-<h2 id="built-with">Built With</h2>
-<ul>
-<li><a href="https://github.com/tesseract-ocr/tesseract">Tesseract Open Source OCR Engine</a></li>
-<li><a href="http://www.leptonica.com/">leptonica</a></li>
-<li><a href="https://www.docker.com/">Docker</a></li>
-<li><a href="https://serverless.com/">Serverless</a></li>
-</ul>
-<h2 id="contributing">Contributing</h2>
-<p>Please feel free to comment or contribute especially if your integrating with <a href="https://serverless.com/">serverless</a> or <a href="https://docs.aws.amazon.com/lambda/latest/dg/deploying-lambda-apps.html">AWS SAM</a></p>
-<h2 id="authors">Authors</h2>
-<ul>
-<li><strong>Gerd Wittchen</strong> - <em>Initial work</em> - <a href="https://gist.github.com/barbolo/e59aa45ec8e425a26ec4da1086acfbc7">Idea</a></li>
-</ul>
-<h2 id="license">License</h2>
-<p>This project is licensed under the MIT License - see the <a href="LICENSE.md">LICENSE.md</a> file for details</p>
 
