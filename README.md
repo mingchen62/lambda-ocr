@@ -139,66 +139,55 @@ layers:
 <p>Switch to the project root directory<br>
 #<a href="https://medium.com/@samme/setting-up-python-3-6-aws-lambda-deployment-package-with-numpy-scipy-pillow-and-scikit-image-de488b2afca6">Setting up Python 3.6 AWS Lambda deployment package with numpy, scipy, pillow and scikit-image</a></p>
 <p>#create mylambdapackag folder<br>
-mkdir mylambdapackage<br>
+% mkdir mylambdapackage<br>
 #start the docker container and share the folder created</p>
 <p>#<a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html?source=post_page---------------------------">https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html?source=post_page---------------------------</a><br>
 #<a href="https://github.com/docker-library/official-images/blob/master/library/amazonlinux">https://github.com/docker-library/official-images/blob/master/library/amazonlinux</a></p>
-<p>docker run -ti -v ~/mylambdapackage:/mylambdapackage amazonlinux:2018.03.0.20190514</p>
+<p>% docker run -ti -v ~/mylambdapackage:/mylambdapackage amazonlinux:2018.03.0.20190514</p>
 <p>#Inside docker container,<br>
-yum update -y &amp;&amp; yum install -y gcc48 gcc48-c++ python36 python36-devel atlas-devel atlas-sse3-devel blas-devel lapack-devel zlib-devel libpng-devel libjpeg-turbo-devel zip freetype-devel findutils libtiff libtiff-devel</p>
+% yum update -y &amp;&amp; yum install -y gcc48 gcc48-c++ python36 python36-devel atlas-devel atlas-sse3-devel blas-devel lapack-devel zlib-devel libpng-devel libjpeg-turbo-devel zip freetype-devel findutils libtiff libtiff-devel</p>
 <p>#go into /mylambdapackage folder<br>
-cd /mylambdapackage<br>
+% cd /mylambdapackage<br>
 #create Python environment in mylambda folder and activate it<br>
-python36 -m venv --copies mylambda &amp;&amp; source mylambda/bin/activate</p>
+% python36 -m venv --copies mylambda &amp;&amp; source mylambda/bin/activate</p>
 <p>The–copies parameter will “try to use copies rather than symlinks, even when symlinks are the default for the platform”.</p>
-<p>pip3 install -U pip<br>
-pip3 install --no-binary :all: numpy scipy pillow<br>
-pip3 install --no-binary :all: cython<br>
-pip3 install --no-binary :all: scikit-image</p>
+<p>% pip3 install -U pip<br>
+% pip3 install --no-binary :all: numpy scipy pillow<br>
+% pip3 install --no-binary :all: cython<br>
+% pip3 install --no-binary :all: scikit-image</p>
 <p>#specify where the shared libraries will be stored<br>
 libdir="$VIRTUAL_ENV/lib/python3.6/site-packages/lib/"<br>
 mkdir -p $libdir<br>
 #copy the libraries<br>
-cp -v /usr/lib64/atlas/<em>.so.3 $libdir<br>
-cp -v /usr/lib64/libquadmath.so.0 $libdir<br>
-cp -v /usr/lib64/libgfortran.so.3 $libdir<br>
-cp -v /usr/lib64/libpng.so.3 $libdir<br>
-cp -v /usr/lib64/libjpeg.so.62 $libdir<br>
-cp -v /usr/lib64/libtiff.so.5 $libdir<br>
-find $VIRTUAL_ENV/lib/python3.6/site-packages/ -name "</em>.so*" | xargs strip -v</p>
+% cp -v /usr/lib64/atlas/<em>.so.3 $libdir<br>
+% cp -v /usr/lib64/libquadmath.so.0 $libdir<br>
+% cp -v /usr/lib64/libgfortran.so.3 $libdir<br>
+% cp -v /usr/lib64/libpng.so.3 $libdir<br>
+% cp -v /usr/lib64/libjpeg.so.62 $libdir<br>
+% cp -v /usr/lib64/libtiff.so.5 $libdir<br>
+% find $VIRTUAL_ENV/lib/python3.6/site-packages/ -name "</em>.so*" | xargs strip -v</p>
 <p>#compress site-packages content into mylambda.zip<br>
-pushd $VIRTUAL_ENV/lib/python3.6/site-packages/<br>
-zip -r -9 /mylambdapackage/mylambda.zip *<br>
-popd<br>
-#The created zip file should be located in mylambdapackage/mylambda.zip.</p>
-<pre><code>
-### Test OCR Lambda function
-
-The lambda function is accepting json post request
-
-
-#### Lambda Test function
-
-Please refer to the test event, as defined in eventdata.json.
-
-## Built With
-
-* [Tesseract Open Source OCR Engine](https://github.com/tesseract-ocr/tesseract)
-* [leptonica](http://www.leptonica.com/)
-* [Docker](https://www.docker.com/)
-* [Serverless](https://serverless.com/)
-
-## Contributing
-
-Please feel free to comment or contribute especially if your integrating with [serverless](https://serverless.com/) or [AWS SAM](https://docs.aws.amazon.com/lambda/latest/dg/deploying-lambda-apps.html)
-
-## Authors
-
-* **Gerd Wittchen** - *Initial work* - [Idea](https://gist.github.com/barbolo/e59aa45ec8e425a26ec4da1086acfbc7)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-</code></pre>
+% pushd $VIRTUAL_ENV/lib/python3.6/site-packages/<br>
+% zip -r -9 /mylambdapackage/mylambda.zip *<br>
+% popd<br>
+#The created zip file should be located in  mylambdapackage/mylambda.zip.</p>
+<h3 id="test-ocr-lambda-function">Test OCR Lambda function</h3>
+<p>The lambda function is accepting json post request</p>
+<h4 id="lambda-test-function">Lambda Test function</h4>
+<p>Please refer to the test event, as defined in eventdata.json.</p>
+<h2 id="built-with">Built With</h2>
+<ul>
+<li><a href="https://github.com/tesseract-ocr/tesseract">Tesseract Open Source OCR Engine</a></li>
+<li><a href="http://www.leptonica.com/">leptonica</a></li>
+<li><a href="https://www.docker.com/">Docker</a></li>
+<li><a href="https://serverless.com/">Serverless</a></li>
+</ul>
+<h2 id="contributing">Contributing</h2>
+<p>Please feel free to comment or contribute especially if your integrating with <a href="https://serverless.com/">serverless</a> or <a href="https://docs.aws.amazon.com/lambda/latest/dg/deploying-lambda-apps.html">AWS SAM</a></p>
+<h2 id="authors">Authors</h2>
+<ul>
+<li><strong>Gerd Wittchen</strong> - <em>Initial work</em> - <a href="https://gist.github.com/barbolo/e59aa45ec8e425a26ec4da1086acfbc7">Idea</a></li>
+</ul>
+<h2 id="license">License</h2>
+<p>This project is licensed under the MIT License - see the <a href="LICENSE.md">LICENSE.md</a> file for details</p>
 
