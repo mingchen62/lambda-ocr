@@ -9,14 +9,13 @@
 <h1 id="tesseract-ocr-on-aws-lambda">Tesseract OCR on AWS Lambda</h1>
 <p>AWS Lambda function to run tesseract OCR</p>
 <h2 id="getting-started">Getting Started</h2>
-<p>These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.</p>
 <p>The idea is to use a docker container to simulate an AWS lambda environment this allows to build binaries against AWS lambda linux env.<br>
 In this example I have build <a href="http://www.leptonica.com/">leptonica</a> and <a href="https://github.com/tesseract-ocr/tesseract">Tesseract Open Source OCR Engine</a>.</p>
 <p>The whole idea is leveraged from <a href="https://gist.github.com/barbolo/e59aa45ec8e425a26ec4da1086acfbc7">here</a></p>
 <h3 id="prerequisites">Prerequisites</h3>
 <p>In order to get started you need docker.<br>
-This is a very basic lamdba example and was tested on AWS Lambda Python3.6 environment in 11/2018.<br>
-AWS deployment will be automated using <a href="https://serverless.com/">serverless framework</a></p>
+This is a  basic lamdba example and was tested on AWS Lambda Python3.6 environment in 11/2018.<br>
+AWS deployment will be automated using <a href="https://serverless.com/">serverless framework</a>. An alternative is to use <a href="https://docs.aws.amazon.com/serverless-application-model/index.html">AWS SAM</a>.</p>
 <h3 id="installing">Installing</h3>
 <h4 id="install-node.js-ubuntu">Install Node.js (Ubuntu)</h4>
 <p>Add latest release, add this PPA</p>
@@ -62,7 +61,7 @@ for your user.</p>
 <pre class=" language-bash"><code class="prism  language-bash">$ aws configure
 AWS Access Key ID <span class="token punctuation">[</span>None<span class="token punctuation">]</span>: AKIAIOSFODNN7EXAMPLE<span class="token punctuation">(</span>sample<span class="token punctuation">)</span>
 AWS Secret Access Key <span class="token punctuation">[</span>None<span class="token punctuation">]</span>: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY<span class="token punctuation">(</span>sample<span class="token punctuation">)</span>
-Default region name <span class="token punctuation">[</span>None<span class="token punctuation">]</span>: us-west-2
+Default region name <span class="token punctuation">[</span>None<span class="token punctuation">]</span>: us-east-1
 Default output <span class="token function">format</span> <span class="token punctuation">[</span>None<span class="token punctuation">]</span>: json
 </code></pre>
 <p>Test aws access to list available s3 buckets</p>
@@ -70,10 +69,8 @@ Default output <span class="token function">format</span> <span class="token pun
 </code></pre>
 <p>Additional <a href="https://serverless.com/framework/docs/providers/aws/guide/credentials/">documentation</a></p>
 <h3 id="tesseract-lamda-layer">Tesseract lamda layer</h3>
-<h4 id="build-custom-lamda-layer">Build custom lamda layer</h4>
-<p>A previous version of that example packaged all dependencies<br>
-into a zip file which made the deployment slow due to the large size.</p>
-<p>One solution is using lambda layer to decouple binary dependencies from the actual lambda code. Both component could be defined in one serverless file but to really leverage decoupelling seperation is recommended.</p>
+<h4 id="build-tesseract-lamda-layer">Build Tesseract lamda layer</h4>
+<p>One solution is using lambda layer to decouple binary dependencies from the actual lambda code. It is good for code reuse as well as modular deployment.</p>
 <p><a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html">AWS Lambda Layer</a></p>
 <pre class=" language-bash"><code class="prism  language-bash"><span class="token function">cd</span> tesseract-layer
 </code></pre>
@@ -84,7 +81,7 @@ into a zip file which made the deployment slow due to the large size.</p>
 bundled into Lambda layer, but you can override it using<br>
 <code>-m</code> parameter (for model type) and <code>-l</code> parameter (comma-separated<br>
 list of languages), for example:</p>
-<pre class=" language-bash"><code class="prism  language-bash">./build.sh -l eng,por -m fast <span class="token comment"># downloads FAST models for English and Portugese</span>
+<pre class=" language-bash"><code class="prism  language-bash">./build.sh -l eng,chi_sim -m fast <span class="token comment"># downloads FAST models for English and Chinese Simplied</span>
 </code></pre>
 <p>Verify the folder layer has been created and contains the following folders</p>
 <pre class=" language-bash"><code class="prism  language-bash">$ <span class="token function">ls</span> layer
@@ -118,7 +115,7 @@ returned layer reference. The reference is output of the layer deployment.</p>
 <span class="token punctuation">..</span>.
 <span class="token punctuation">..</span>.
 layers:
-  tesseractPython36: arn:aws:lambda:ap-southeast-2:***************:layer:tesseractPython36:17
+  tesseractPython36: arn:aws:lambda:us-east-1:***************:layer:tesseractPython36:1
 </code></pre>
 <p>Alternative query the layer version</p>
 <pre class=" language-bash"><code class="prism  language-bash">aws lambda get-layer-version --layer-name tesseractPython36 --version-number <span class="token comment">#versionNumber eg. 1</span>
@@ -135,46 +132,34 @@ layers:
 .
 .
 </code></pre>
-<h3 id="lambda-deployment">Lambda Deployment</h3>
-<p>Switch to the project root directory<br>
-#<a href="https://medium.com/@samme/setting-up-python-3-6-aws-lambda-deployment-package-with-numpy-scipy-pillow-and-scikit-image-de488b2afca6">Setting up Python 3.6 AWS Lambda deployment package with numpy, scipy, pillow and scikit-image</a></p>
-<p>#create mylambdapackag folder<br>
-% mkdir mylambdapackage<br>
-#start the docker container and share the folder created</p>
-<p>#<a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html?source=post_page---------------------------">https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html?source=post_page---------------------------</a><br>
-#<a href="https://github.com/docker-library/official-images/blob/master/library/amazonlinux">https://github.com/docker-library/official-images/blob/master/library/amazonlinux</a></p>
-<p>% docker run -ti -v ~/mylambdapackage:/mylambdapackage amazonlinux:2018.03.0.20190514</p>
-<p>#Inside docker container,<br>
-% yum update -y &amp;&amp; yum install -y gcc48 gcc48-c++ python36 python36-devel atlas-devel atlas-sse3-devel blas-devel lapack-devel zlib-devel libpng-devel libjpeg-turbo-devel zip freetype-devel findutils libtiff libtiff-devel</p>
-<p>#go into /mylambdapackage folder<br>
-% cd /mylambdapackage<br>
-#create Python environment in mylambda folder and activate it<br>
-% python36 -m venv --copies mylambda &amp;&amp; source mylambda/bin/activate</p>
-<p>The–copies parameter will “try to use copies rather than symlinks, even when symlinks are the default for the platform”.</p>
-<p>% pip3 install -U pip<br>
-% pip3 install --no-binary :all: numpy scipy pillow<br>
-% pip3 install --no-binary :all: cython<br>
-% pip3 install --no-binary :all: scikit-image</p>
-<p>#specify where the shared libraries will be stored<br>
-libdir="$VIRTUAL_ENV/lib/python3.6/site-packages/lib/"<br>
-mkdir -p $libdir<br>
-#copy the libraries<br>
-% cp -v /usr/lib64/atlas/<em>.so.3 $libdir<br>
-% cp -v /usr/lib64/libquadmath.so.0 $libdir<br>
-% cp -v /usr/lib64/libgfortran.so.3 $libdir<br>
-% cp -v /usr/lib64/libpng.so.3 $libdir<br>
-% cp -v /usr/lib64/libjpeg.so.62 $libdir<br>
-% cp -v /usr/lib64/libtiff.so.5 $libdir<br>
-% find $VIRTUAL_ENV/lib/python3.6/site-packages/ -name "</em>.so*" | xargs strip -v</p>
-<p>#compress site-packages content into mylambda.zip<br>
-% pushd $VIRTUAL_ENV/lib/python3.6/site-packages/<br>
-% zip -r -9 /mylambdapackage/mylambda.zip *<br>
-% popd<br>
-#The created zip file should be located in  mylambdapackage/mylambda.zip.</p>
+<h3 id="pil-lambda-layer-for-pil">PIL Lambda layer for PIL</h3>
+<p>We will build one more lambda layer for PIL, as it is not included in AWS lambda python runtime.</p>
+<h4 id="build-pillow-lamda-layer">Build pillow lamda layer</h4>
+<p>Switch to the pillow-layer sub directory</p>
+<pre class=" language-bash"><code class="prism  language-bash">$  <span class="token function">cd</span>  pillow-layer
+$ ./build.sh pillow
+</code></pre>
+<h4 id="package-and-deploy-pillow-lamda-layer">Package and Deploy pillow lamda layer</h4>
+<pre class=" language-bash"><code class="prism  language-bash">$ serverless package
+$ serverless deploy
+</code></pre>
+<p>You can check AWS lambda console to make sure two customer layers are there. (Lambda -&gt; Layer)</p>
 <h3 id="test-ocr-lambda-function">Test OCR Lambda function</h3>
-<p>The lambda function is accepting json post request</p>
-<h4 id="lambda-test-function">Lambda Test function</h4>
-<p>Please refer to the test event, as defined in eventdata.json.</p>
+<p>Use Lambda console to create and deploy OCR lambda function( lambda_function.py).</p>
+<ul>
+<li>Add the two customer built layers to the lambda function<br>
+<img src="https://mchen62.s3.amazonaws.com/lambda_layers_demo.png" alt="enter image description here"></li>
+<li>Define tesseract environment variables:<br>
+<img src="https://mchen62.s3.amazonaws.com/lambda_demo.png" alt="enter image description here"></li>
+<li>Adjust parameters in basic setting.<br>
+Increase timeout value to 30 seconds for a large image;<br>
+Increase memory usage to 1 G  for better performance;</li>
+</ul>
+<p>After deployment,  lambda function is accepting json post request.<br>
+To test lambda deployment, run test script in project root dir:</p>
+<pre class=" language-bash"><code class="prism  language-bash">aws lambda invoke  --invocation-type RequestResponse  --function-name <span class="token operator">&lt;</span>lambdafunctname<span class="token operator">&gt;</span>  --region us-east-1  --payload file://test.json outfile
+</code></pre>
+<p>Please refer to the test event, as defined in test.json. It includes a base64 encoded image.</p>
 <h2 id="built-with">Built With</h2>
 <ul>
 <li><a href="https://github.com/tesseract-ocr/tesseract">Tesseract Open Source OCR Engine</a></li>
