@@ -149,6 +149,7 @@ $ serverless deploy
 <ul>
 <li>Add the two customer built layers to the lambda function<br>
 <img src="https://mchen62.s3.amazonaws.com/lambda_layers_demo.png" alt="enter image description here"></li>
+<li></li>
 <li>Define tesseract environment variables:<br>
 <img src="https://mchen62.s3.amazonaws.com/lambda_demo.png" alt="enter image description here"></li>
 <li>Adjust parameters in basic setting.<br>
@@ -172,6 +173,7 @@ To test lambda deployment, run test script in project root dir:</p>
 <h2 id="authors">Authors</h2>
 <ul>
 <li><strong>Gerd Wittchen</strong> - <em>Initial work</em> - <a href="https://gist.github.com/barbolo/e59aa45ec8e425a26ec4da1086acfbc7">Idea</a></li>
+<li>Ming Chen -</li>
 </ul>
 <h2 id="license">License</h2>
 <p>This project is licensed under the MIT License - see the <a href="LICENSE.md">LICENSE.md</a> file for details</p>
