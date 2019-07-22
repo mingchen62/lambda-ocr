@@ -11,11 +11,11 @@
 <h2 id="getting-started">Getting Started</h2>
 <p>The idea is to use a docker container to simulate an AWS lambda environment this allows to build binaries against AWS lambda linux env.<br>
 In this example I have build <a href="http://www.leptonica.com/">leptonica</a> and <a href="https://github.com/tesseract-ocr/tesseract">Tesseract Open Source OCR Engine</a>.</p>
-<p>The whole idea is leveraged from <a href="https://gist.github.com/barbolo/e59aa45ec8e425a26ec4da1086acfbc7">here</a></p>
+<p>The whole idea is leveraged from <a href="https://gist.github.com/barbolo/e59aa45ec8e425a26ec4da1086acfbc7">here</a><br>
+The main components in this project are two lambda layers and one lambda function.</p>
 <h3 id="prerequisites">Prerequisites</h3>
-<p>In order to get started you need docker.<br>
-This is a  basic lamdba example and was tested on AWS Lambda Python3.6 environment in 11/2018.<br>
-AWS deployment will be automated using <a href="https://serverless.com/">serverless framework</a>. An alternative is to use <a href="https://docs.aws.amazon.com/serverless-application-model/index.html">AWS SAM</a>.</p>
+<p>In order to get started you need docker.</p>
+<p>AWS deployment can be automated using <a href="https://serverless.com/">serverless framework</a>. An alternative is to use <a href="https://docs.aws.amazon.com/serverless-application-model/index.html">AWS SAM</a>.</p>
 <h3 id="installing">Installing</h3>
 <h4 id="install-node.js-ubuntu">Install Node.js (Ubuntu)</h4>
 <p>Add latest release, add this PPA</p>
