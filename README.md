@@ -147,14 +147,19 @@ $ serverless deploy
 <h3 id="test-ocr-lambda-function">Test OCR Lambda function</h3>
 <p>Use Lambda console to create and deploy OCR lambda function( lambda_function.py).</p>
 <ul>
-<li>Add the two customer built layers to the lambda function<br>
-<img src="https://mchen62.s3.amazonaws.com/lambda_layers_demo.png" alt="enter image description here"></li>
-<li></li>
-<li>Define tesseract environment variables:<br>
-<img src="https://mchen62.s3.amazonaws.com/lambda_demo.png" alt="enter image description here"></li>
-<li>Adjust parameters in basic setting.<br>
+<li>
+<p>Add the two customer built layers to the lambda function<br>
+<img src="https://mchen62.s3.amazonaws.com/lambda_layers_demo.png" alt="enter image description here"></p>
+</li>
+<li>
+<p>Define tesseract environment variables:<br>
+<img src="https://mchen62.s3.amazonaws.com/lambda_demo.png" alt="enter image description here"></p>
+</li>
+<li>
+<p>Adjust parameters in basic setting.<br>
 Increase timeout value to 30 seconds for a large image;<br>
-Increase memory usage to 1 G  for better performance;</li>
+Increase memory usage to 1 G  for better performance;</p>
+</li>
 </ul>
 <p>After deployment,  lambda function is accepting json post request.<br>
 To test lambda deployment, run test script in project root dir:</p>
@@ -173,7 +178,7 @@ To test lambda deployment, run test script in project root dir:</p>
 <h2 id="authors">Authors</h2>
 <ul>
 <li><strong>Gerd Wittchen</strong> - <em>Initial work</em> - <a href="https://gist.github.com/barbolo/e59aa45ec8e425a26ec4da1086acfbc7">Idea</a></li>
-<li>Ming Chen -</li>
+<li>Ming Chen</li>
 </ul>
 <h2 id="license">License</h2>
 <p>This project is licensed under the MIT License - see the <a href="LICENSE.md">LICENSE.md</a> file for details</p>
