@@ -147,19 +147,17 @@ $ serverless deploy
 <h3 id="test-ocr-lambda-function">Test OCR Lambda function</h3>
 <p>Use Lambda console to create and deploy OCR lambda function( lambda_function.py).</p>
 <ul>
-<li>
-<p>Add the two customer built layers to the lambda function<br>
-<img src="https://mchen62.s3.amazonaws.com/lambda_layers_demo.png" alt="enter image description here"></p>
-</li>
-<li>
-<p>Define tesseract environment variables:<br>
-<img src="https://mchen62.s3.amazonaws.com/lambda_demo.png" alt="enter image description here"></p>
-</li>
-<li>
-<p>Adjust parameters in basic setting.<br>
+<li>Add the two customer built layers to the lambda function</li>
+</ul>
+<p><img src="https://mchen62.s3.amazonaws.com/lambda_layers_demo.png" alt="enter image description here"></p>
+<ul>
+<li>Define tesseract environment variables:</li>
+</ul>
+<p><img src="https://mchen62.s3.amazonaws.com/lambda_demo.png" alt="enter image description here"></p>
+<ul>
+<li>Adjust parameters in basic setting.<br>
 Increase timeout value to 30 seconds for a large image;<br>
-Increase memory usage to 1 G  for better performance;</p>
-</li>
+Increase memory usage to 1 G  for better performance;</li>
 </ul>
 <p>After deployment,  lambda function is accepting json post request.<br>
 To test lambda deployment, run test script in project root dir:</p>
